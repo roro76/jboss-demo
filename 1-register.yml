@@ -1,0 +1,24 @@
+---
+- hosts: app-servers
+  become: true
+  vars_prompt:
+    - name: "rh_username"
+      prompt: "Username?"
+    - name: "rh_password"
+      prompt: "Password?"
+  vars:
+    - rh_pool_id: 8a85f98260c27fc50160c328c08a5045
+  tasks:
+  - ping:
+  - redhat_subscription:
+      state: present
+      username: "{{rh_username}}"
+      password: "{{rh_password}}"
+      pool_ids: "{{rh_pool_id}}"
+  - rhsm_repository:
+      name: "*"
+      state: disabled
+  - rhsm_repository:
+      name: rhel-7-server-rpms
+      state: enabled
+      

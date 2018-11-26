@@ -1,0 +1,36 @@
+---
+- hosts: app-servers
+  become: true
+  tasks:
+  - yum:
+      name: "{{packages}}"
+      state: latest
+    vars:
+      packages:
+      - java-1.8.0-openjdk
+      - unzip
+  - unarchive:
+      src: jboss-eap-7.1.0.zip
+      dest: /opt/
+  - file:
+      src: /opt/jboss-eap-7.1
+      dest: /opt/jboss-eap
+      state: link
+  - copy:
+      src: jboss-eap7.service
+      dest: /etc/systemd/system/jboss-eap7.service
+  - copy:
+      src: jboss-eap.conf
+      dest: /etc/default/jboss-eap.conf
+  - file:
+      path: /var/log/jboss-eap
+      state: directory
+      owner: jboss
+      group: jboss
+      mode: 0755
+  - file:
+      path: /var/log/jboss-eap/console.log
+      state: touch
+      owner: jboss
+      group: jboss
+      mode: 0644

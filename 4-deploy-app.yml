@@ -1,0 +1,21 @@
+---
+- hosts: app-servers
+  become: true
+  tasks:
+  - copy:
+      src: jboss-helloworld.war
+      dest: /tmp/jboss-helloworld.war
+  - jboss:
+      src: /tmp/jboss-helloworld.war
+      deployment: helloworld.war
+      deploy_path: /opt/jboss-eap/standalone/deployments
+      state: present
+  - copy:
+      src: ticket-monster.war
+      dest: /tmp/ticket-monster.war
+  - jboss:
+      src: /tmp/ticket-monster.war
+      deployment: ticket-monster.war
+      deploy_path: /opt/jboss-eap/standalone/deployments
+      state: present
+      

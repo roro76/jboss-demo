@@ -1,0 +1,7 @@
+[all:vars]
+ansible_connection=ssh
+ansible_user=cloud-user
+ansible_ssh_private_key_file=/home/tony/.ssh/demo
+
+[app-servers]
+jboss.example.com

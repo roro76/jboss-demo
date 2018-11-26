@@ -1,0 +1,8 @@
+---
+- hosts: app-servers
+  become: true
+  tasks:
+  - yum:
+      name: "*"
+      state: latest
+      
